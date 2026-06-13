@@ -15,7 +15,8 @@ public class SortStep {
     public SortStep() {
     }
 
-    public SortStep(int[] array, int idx1, int idx2, String type, int comparisons, int swaps, List<Integer> sortedIndices) {
+    public SortStep(int[] array, int idx1, int idx2, String type, int comparisons, int swaps,
+            List<Integer> sortedIndices) {
         this.array = array.clone();
         this.idx1 = idx1;
         this.idx2 = idx2;
