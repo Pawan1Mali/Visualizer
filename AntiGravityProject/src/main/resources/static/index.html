@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A stunning sorting algorithm visualizer built with Spring Boot. Watch Bubble, Selection, Insertion, Merge, and Quick Sort in action.">
+    <title>Sorting Visualizer — Watch Algorithms Come Alive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header" id="appHeader">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span class="bar b1"></span>
+                        <span class="bar b2"></span>
+                        <span class="bar b3"></span>
+                        <span class="bar b4"></span>
+                        <span class="bar b5"></span>
+                    </div>
+                    <h1>Sorting <span class="gradient-text">Visualizer</span></h1>
+                </div>
+                <p class="tagline">Watch algorithms come alive</p>
+            </div>
+        </header>
+
+        <!-- Controls Panel -->
+        <section class="controls-panel glass-panel" id="controlsPanel">
+            <div class="controls-grid">
+
+                <!-- Algorithm Selector -->
+                <div class="control-group" id="algorithmGroup">
+                    <label class="control-label">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        Algorithm
+                    </label>
+                    <select id="algorithmSelect" class="control-select">
+                        <option value="bubble">Bubble Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
+                        <option value="merge">Merge Sort</option>
+                        <option value="quick">Quick Sort</option>
+                    </select>
+                </div>
+
+                <!-- Array Size -->
+                <div class="control-group" id="sizeGroup">
+                    <label class="control-label">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="9" y1="3" x2="9" y2="21"/>
+                            <line x1="15" y1="3" x2="15" y2="21"/>
+                        </svg>
+                        Array Size: <span id="sizeValue" class="value-badge">50</span>
+                    </label>
+                    <input type="range" id="sizeSlider" class="control-slider" min="10" max="150" value="50">
+                </div>
+
+                <!-- Speed -->
+                <div class="control-group" id="speedGroup">
+                    <label class="control-label">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        Speed: <span id="speedValue" class="value-badge">Medium</span>
+                    </label>
+                    <input type="range" id="speedSlider" class="control-slider" min="1" max="100" value="50">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="control-group buttons-group" id="buttonsGroup">
+                    <button id="generateBtn" class="btn btn-secondary" title="Generate new random array">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"/>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                        </svg>
+                        Generate
+                    </button>
+                    <button id="sortBtn" class="btn btn-primary" title="Start sorting">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        Sort
+                    </button>
+                    <button id="stopBtn" class="btn btn-danger" title="Stop sorting" disabled>
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="6" y="6" width="12" height="12" rx="1"/>
+                        </svg>
+                        Stop
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Visualization Area -->
+            <section class="visualizer-section glass-panel" id="visualizerSection">
+                <div class="visualizer-container" id="visualizerContainer">
+                    <!-- Bars rendered by JS -->
+                </div>
+            </section>
+
+            <!-- Bottom Info Row -->
+            <div class="info-row">
+
+                <!-- Stats Panel -->
+                <section class="stats-panel glass-panel" id="statsPanel">
+                    <h3 class="panel-title">Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card" id="comparisonsCard">
+                            <div class="stat-value" id="comparisonsCount">0</div>
+                            <div class="stat-label">Comparisons</div>
+                        </div>
+                        <div class="stat-card" id="swapsCard">
+                            <div class="stat-value" id="swapsCount">0</div>
+                            <div class="stat-label">Swaps</div>
+                        </div>
+                        <div class="stat-card" id="statusCard">
+                            <div class="stat-value status-text" id="statusText">Ready</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                        <div class="stat-card" id="timeCard">
+                            <div class="stat-value" id="timeElapsed">0.0s</div>
+                            <div class="stat-label">Time</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Algorithm Info Panel -->
+                <section class="algo-info-panel glass-panel" id="algoInfoPanel">
+                    <h3 class="panel-title" id="algoName">Bubble Sort</h3>
+                    <p class="algo-description" id="algoDescription">Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.</p>
+                    <div class="complexity-grid">
+                        <div class="complexity-item">
+                            <span class="complexity-label">Best</span>
+                            <span class="complexity-value" id="timeBest">O(n)</span>
+                        </div>
+                        <div class="complexity-item">
+                            <span class="complexity-label">Average</span>
+                            <span class="complexity-value" id="timeAvg">O(n²)</span>
+                        </div>
+                        <div class="complexity-item">
+                            <span class="complexity-label">Worst</span>
+                            <span class="complexity-value" id="timeWorst">O(n²)</span>
+                        </div>
+                        <div class="complexity-item">
+                            <span class="complexity-label">Space</span>
+                            <span class="complexity-value" id="spaceComplexity">O(1)</span>
+                        </div>
+                        <div class="complexity-item">
+                            <span class="complexity-label">Stable</span>
+                            <span class="complexity-value" id="isStable">Yes</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+
+        <!-- Legend -->
+        <footer class="legend-bar glass-panel" id="legendBar">
+            <div class="legend-item">
+                <span class="legend-color legend-default"></span>
+                <span>Unsorted</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color legend-comparing"></span>
+                <span>Comparing</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color legend-swapping"></span>
+                <span>Swapping</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color legend-sorted"></span>
+                <span>Sorted</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
